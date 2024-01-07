@@ -11,6 +11,8 @@ function init() {
         view: new ol.View({
             center: [0, 0],
             zoom: 2,
+            maxZoom: 10,
+            minZoom: 2,
         }),
         layers: [
             new ol.layer.Tile({

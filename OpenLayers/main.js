@@ -2,6 +2,20 @@ window.onload = init;
 // Grab the element
 const popupContainerEle = queryDOM("popup-container");
 
+const fullScreenControl = new ol.control.FullScreen();
+const mouseControl = new ol.control.MousePosition();
+const overViewMapControl = new ol.control.OverviewMap({
+    collapsed: false,
+    layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM(),
+        }),
+    ],
+});
+const scaleLineControl = new ol.control.ScaleLine();
+const zoomSliderControl = new ol.control.ZoomSlider();
+const zoomToExtentControl = new ol.control.ZoomToExtent();
+
 /**
  * https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
  * @description Initializes a map object
@@ -14,6 +28,8 @@ function init() {
         view: new ol.View({
             center: [0, 0],
             zoom: 2,
+            // https://www.mathsisfun.com/geometry/radians.html
+            rotation: Math.PI / 6, // approx 90 degrees
         }),
         // Tile is base layer, we can add vector and raster on top
         layers: [
@@ -23,7 +39,19 @@ function init() {
         ],
         target: "js-map",
         keyboardEventTarget: document,
+        controls: ol.control
+            .defaults()
+            .extend([
+                fullScreenControl,
+                mouseControl,
+                overViewMapControl,
+                scaleLineControl,
+                zoomSliderControl,
+                zoomToExtentControl,
+            ]),
     });
+    // The array contains 3 default control elements
+    console.log(ol.control.defaults());
 
     // Create an overlay
     const popup = createOverlay(popupContainerEle);

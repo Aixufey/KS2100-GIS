@@ -3,6 +3,7 @@ window.onload = init;
 const popupContainerEle = queryDOM("popup-container");
 
 /**
+ * https://openlayers.org/en/latest/apidoc/module-ol_Map-Map.html
  * @description Initializes a map object
  * - To create a map object we need to define a view object with center and coordinates and zoom level
  * - Map works with layers and we start with a base tile that is `Open Street Map`
@@ -21,6 +22,7 @@ function init() {
             }),
         ],
         target: "js-map",
+        keyboardEventTarget: document,
     });
 
     // Create an overlay
@@ -32,6 +34,25 @@ function init() {
         popup.setPosition(undefined);
         popup.setPosition(coord);
         popupContainerEle.innerHTML = coord;
+    });
+
+    // Drag and Rotate
+    const dragRot = new ol.interaction.DragRotate({
+        condition: ol.events.condition.altKeyOnly,
+    });
+    map.addInteraction(dragRot);
+
+    // Drawing
+    const draw = new ol.interaction.Draw({
+        type: "Polygon",
+        // freehand: true,
+    });
+    map.addInteraction(draw);
+
+    draw.on("drawend", (e) => {
+        let parser = new ol.format.GeoJSON();
+        let drawnFeatures = parser.writeFeaturesObject([e.feature]);
+        console.log(drawnFeatures.features[0].geometry.coordinates);
     });
 }
 

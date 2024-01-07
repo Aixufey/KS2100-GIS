@@ -4,12 +4,22 @@
 - A Layer provides geospatial data that is [vector](https://gisgeography.com/spatial-data-types-vector-raster/) or [raster](https://desktop.arcgis.com/en/arcmap/latest/manage-data/raster-and-images/what-is-raster-data.htm) information.
   - Vectors are polygons i.e. used for boundaries and borders.
   - Raster are cells/tiles i.e. used for projections, Google Maps projection into tiles.
+  - Overlay creates a container that displays added layers.
+- Interface does not have UI controls by default
+  - Drawing needs to be implemented
+- Control
+  - Default controls are zooming and rotating
+  - The rotation are calculated in [radians](https://www.mathsisfun.com/geometry/radians.html) inside View.
 
 ```mermaid
 flowchart BT
 A[Map]
-B[View]
-C[Layer]
+B[1. View]
+C[2. Layer - overlay]
+D[3. Interaction]
+E[4. Controls]
 A--->B
 A--->C
+A--->D
+A--->E
 ```

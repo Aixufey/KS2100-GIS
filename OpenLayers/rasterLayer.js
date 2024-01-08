@@ -55,6 +55,17 @@ function init() {
         ],
     });
     map.addLayer(layerGroup);
+
+    // Single Layer CartoDB
+    const cartoDBBaseLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url: 'https://{1-4}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',
+        }),
+        zIndex: 2,
+        opacity: 0.5,
+        visible: true
+    })
+    map.addLayer(cartoDBBaseLayer);
     map.on("click", (e) => {
         console.log(e.coordinate);
     });

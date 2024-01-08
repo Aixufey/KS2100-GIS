@@ -1,5 +1,4 @@
-window.onload = init();
-
+window.onload = init;
 function init() {
     const map = new ol.Map({
         view: new ol.View({
@@ -15,7 +14,7 @@ function init() {
             new ol.layer.Tile({
                 source: new ol.source.OSM(),
                 zIndex: 1,
-                visible: true,
+                visible: false,
                 // https://en.wikipedia.org/wiki/Cartesian_coordinate_system
                 // Define cartesian coordinates for projection left(minX), bottom(minY), right(maxX), bottom(maxY)
                 extent: [
@@ -38,11 +37,20 @@ function init() {
                     url: "https://{a-c}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
                 }),
                 zIndex: 0,
-                visible: true,
+                visible: false,
                 // extent: [
                 //     314100.98253342975, 7843127.604246465, 1504989.9063382475,
                 //     11160492.53850512,
                 // ],
+            }),
+            // Bing Maps basemap Layer source
+            new ol.layer.Tile({
+                source: new ol.source.BingMaps({
+                    key: 'AjjHB9IJRjQDKEEBfMPciQD9yIEizzOxL-K_xH4mB5knXmBAwTqD9TxYODfKeqhr',
+                    imagerySet: 'Aerial' // AerialWithLabels, Road, CanvasDark, CanvasGray
+                }),
+                zIndex: 1,
+                visible: true,
             }),
         ],
     });

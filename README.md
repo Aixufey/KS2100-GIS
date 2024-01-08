@@ -23,3 +23,13 @@ A--->C
 A--->D
 A--->E
 ```
+
+---
+
+## Layers
+
+- Tile Source 
+  - URL tile
+    - Tile Image & Vector Tile
+      - Bing Maps, XYZ (CartoDB, OSM)
+  - UTF Grid

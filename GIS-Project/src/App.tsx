@@ -26,7 +26,9 @@ function App() {
 
   return (
     <>
-      <MapView map={map} />
+      <MapView
+        className='w-screen h-screen'
+        map={map} />
     </>
   );
 }

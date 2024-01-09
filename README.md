@@ -32,4 +32,5 @@ A--->E
   - URL tile
     - Tile Image & Vector Tile
       - Bing Maps, XYZ (CartoDB, OSM)
+      - 
   - UTF Grid

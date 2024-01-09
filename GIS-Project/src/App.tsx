@@ -1,15 +1,20 @@
 import { Map, View } from 'ol';
 import { ViewOptions } from 'ol/View';
-import TileLayer from 'ol/layer/Tile';
-import { OSM } from 'ol/source';
-import { useMemo, useState } from 'react';
+import { useGeographic } from 'ol/proj';
+import { useEffect, useMemo, useState } from 'react';
 import { MapView } from './components';
+import { useBackgroundLayer, useCountiesLayer } from './hooks';
 
 function App() {
+  // Geographic projection for longitude and latitude
+  useGeographic();
+  const backgroundLayer = useBackgroundLayer();
+  const countiesLayer = useCountiesLayer();
   const [defaultView, setDefaultView] = useState<ViewOptions>({
-    center: [10.5, 60],
-    zoom: 10,
+    center: [10.740584026007738, 59.91564290165622],
+    zoom: 12,
   });
+
   // Map Object
   const map = useMemo(() => {
     return new Map({
@@ -17,18 +22,18 @@ function App() {
     });
   }, []);
 
-  const backgroundLayer = useMemo(() => {
-    return new TileLayer({
-      source: new OSM(),
-    });
+  // All layers
+  const layerStack = useMemo(() => {
+    return [backgroundLayer, ...[countiesLayer]];
   }, []);
-  map.addLayer(backgroundLayer);
+
+  useEffect(() => {
+    map.setLayers(layerStack);
+  }, [layerStack]);
 
   return (
     <>
-      <MapView
-        className='w-screen h-screen'
-        map={map} />
+      <MapView className="w-screen h-screen" map={map} />
     </>
   );
 }

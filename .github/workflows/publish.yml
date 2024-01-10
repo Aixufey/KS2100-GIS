@@ -25,6 +25,7 @@ jobs:
           cd GIS-project
           npm ci
           npm run build
+        working-directory: ./GIS-project
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

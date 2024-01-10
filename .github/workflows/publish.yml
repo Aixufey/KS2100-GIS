@@ -26,13 +26,13 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          cd GIS-project
+          cd GIS-Project
           npm ci
           npm run build
-        working-directory: GIS-project
+        working-directory: GIS-Project
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.MY_PAT }}
-          publish_dir: ./GIS-project/dist
+          publish_dir: ./GIS-Project/dist

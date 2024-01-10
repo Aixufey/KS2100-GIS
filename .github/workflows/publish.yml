@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
+
       - name: Debugging
         run: |
           pwd
@@ -26,13 +27,12 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          cd GIS-Project
+          cd GIS-Project  # Ensure the correct case
           npm ci
           npm run build
-        working-directory: GIS-Project
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.MY_PAT }}
-          publish_dir: ./GIS-Project/dist
+          publish_dir: ./dist  # Corrected the publish directory

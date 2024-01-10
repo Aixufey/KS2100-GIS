@@ -27,7 +27,7 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          cd GIS-Project  # Ensure the correct case
+          cd GIS-Project
           npm ci
           npm run build
 
@@ -35,4 +35,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.MY_PAT }}
-          publish_dir: ./dist  # Corrected the publish directory
+          publish_dir: ./GIS-Project/dist

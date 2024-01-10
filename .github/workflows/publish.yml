@@ -23,7 +23,6 @@ jobs:
         run: |
           pwd
           ls -la
-        working-directory: ./GIS-project
 
       - name: Install dependencies and build
         run: |

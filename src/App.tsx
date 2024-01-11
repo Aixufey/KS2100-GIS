@@ -1,8 +1,8 @@
 import { Map, View } from 'ol';
 import { ViewOptions } from 'ol/View';
 import { useGeographic } from 'ol/proj';
-import { useEffect, useMemo, useState } from 'react';
-import { AsideView, MapView } from './components';
+import { MouseEvent, useEffect, useMemo, useState } from 'react';
+import { AsideView, MapView, NavigatorView } from './components';
 import { useBackgroundLayer, useCountiesLayer } from './hooks';
 
 function App() {
@@ -31,17 +31,33 @@ function App() {
     map.setLayers(layerStack);
   }, [layerStack]);
 
+  const handleResetClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    map.getView().animate(defaultView);
+  };
+  const handleShowLocationClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    navigator.geolocation.getCurrentPosition((pos) => {
+      const { longitude, latitude } = pos.coords;
+      const center = [longitude, latitude];
+      map.getView().animate({ center, zoom: 18 });
+    });
+  };
   return (
     <>
-      <div className="flex flex-row">
+      <div className="flex flex-row w-full">
         <AsideView
-          children={'KWS2100 GIS'}
-          className="basis-1/5 w-screen h-screen flex flex-col border-2 border-black"
+          title="KWS2100 GIS"
+          className="min-w-64 h-screen flex flex-col border-2 border-black"
+          childrenTop={
+            <NavigatorView
+              onShowLocationClick={handleShowLocationClick}
+              onResetClick={handleResetClick}
+              className="flex justify-around pt-2 w-full "
+            />
+          }
         />
-        <MapView
-          className="basis-4/5 w-screen h-screen border-2 border-black"
-          map={map}
-        />
+        <MapView className="w-full h-screen border-2 border-black" map={map} />
       </div>
     </>
   );

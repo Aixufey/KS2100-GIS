@@ -1,3 +1,4 @@
 import AsideView from './AsideView';
 import MapView from './MapView';
-export { AsideView, MapView };
+import NavigatorView from './NavigatorView';
+export { AsideView, MapView, NavigatorView };

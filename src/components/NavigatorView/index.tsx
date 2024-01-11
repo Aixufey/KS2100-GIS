@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, memo } from 'react';
 
 type NavigatorProps = {
   className?: string;
@@ -22,4 +22,5 @@ const NavigatorView: React.FC<NavigatorProps> = ({
     </nav>
   );
 };
-export default NavigatorView;
+const MemoizedNavigatorView = memo(NavigatorView);
+export default MemoizedNavigatorView;

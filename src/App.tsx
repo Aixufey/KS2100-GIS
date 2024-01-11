@@ -2,7 +2,7 @@ import { Map, View } from 'ol';
 import { ViewOptions } from 'ol/View';
 import { useGeographic } from 'ol/proj';
 import { MouseEvent, useEffect, useMemo, useState } from 'react';
-import { AsideView, MapView, NavigatorView } from './components';
+import { AsideView, ControlsView, MapView, NavigatorView } from './components';
 import { useBackgroundLayer, useCountiesLayer } from './hooks';
 
 function App() {
@@ -14,6 +14,9 @@ function App() {
     center: [10.740584026007738, 59.91564290165622],
     zoom: 12,
   });
+  const [layersToggle, setLayersToggle] = useState({
+    isCounties: false,
+  });
 
   // Map Object
   const map = useMemo(() => {
@@ -24,8 +27,11 @@ function App() {
 
   // All layers
   const layerStack = useMemo(() => {
-    return [backgroundLayer, ...[countiesLayer]];
-  }, []);
+    return [
+      backgroundLayer,
+      ...(layersToggle.isCounties ? [countiesLayer] : []),
+    ];
+  }, [layersToggle.isCounties]);
 
   useEffect(() => {
     map.setLayers(layerStack);
@@ -43,6 +49,13 @@ function App() {
       map.getView().animate({ center, zoom: 18 });
     });
   };
+  const handleCountiesClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setLayersToggle((prev) => ({
+      ...prev,
+      isCounties: !prev.isCounties,
+    }));
+  };
   return (
     <>
       <div className="flex flex-row w-full">
@@ -54,6 +67,12 @@ function App() {
               onShowLocationClick={handleShowLocationClick}
               onResetClick={handleResetClick}
               className="flex justify-around pt-2 w-full "
+            />
+          }
+          childrenBottom={
+            <ControlsView
+              onClickCounties={handleCountiesClick}
+              className="flex flex-col justify-center items-center w-full"
             />
           }
         />

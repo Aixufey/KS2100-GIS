@@ -2,7 +2,7 @@ import { Map, View } from 'ol';
 import { ViewOptions } from 'ol/View';
 import { useGeographic } from 'ol/proj';
 import { useEffect, useMemo, useState } from 'react';
-import { MapView } from './components';
+import { AsideView, MapView } from './components';
 import { useBackgroundLayer, useCountiesLayer } from './hooks';
 
 function App() {
@@ -33,7 +33,16 @@ function App() {
 
   return (
     <>
-      <MapView className="w-screen h-screen" map={map} />
+      <div className="flex flex-row">
+        <AsideView
+          children={'KWS2100 GIS'}
+          className="basis-1/5 w-screen h-screen flex flex-col border-2 border-black"
+        />
+        <MapView
+          className="basis-4/5 w-screen h-screen border-2 border-black"
+          map={map}
+        />
+      </div>
     </>
   );
 }

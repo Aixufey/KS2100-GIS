@@ -3,7 +3,7 @@ import OSM from 'ol/source/OSM';
 import { useMemo } from 'react';
 
 /**
- * 
+ *
  * @returns {TileLayer} background layer
  */
 const useBackgroundLayer = () => {

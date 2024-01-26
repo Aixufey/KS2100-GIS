@@ -1,16 +1,16 @@
 window.onload = init;
 // Grab the element
-const popupContainerEle = queryDOM("popup-container");
+const popupContainerEle = queryDOM('popup-container');
 
 const fullScreenControl = new ol.control.FullScreen();
 const mouseControl = new ol.control.MousePosition();
 const overViewMapControl = new ol.control.OverviewMap({
-    collapsed: false,
-    layers: [
-        new ol.layer.Tile({
-            source: new ol.source.OSM(),
-        }),
-    ],
+  collapsed: false,
+  layers: [
+    new ol.layer.Tile({
+      source: new ol.source.OSM(),
+    }),
+  ],
 });
 const scaleLineControl = new ol.control.ScaleLine();
 const zoomSliderControl = new ol.control.ZoomSlider();
@@ -24,64 +24,64 @@ const zoomToExtentControl = new ol.control.ZoomToExtent();
  * - target to render the map
  */
 function init() {
-    const map = new ol.Map({
-        view: new ol.View({
-            center: [0, 0],
-            zoom: 2,
-            // https://www.mathsisfun.com/geometry/radians.html
-            rotation: Math.PI / 6, // approx 90 degrees
-        }),
-        // Tile is base layer, we can add vector and raster on top
-        layers: [
-            new ol.layer.Tile({
-                source: new ol.source.OSM(),
-            }),
-        ],
-        target: "js-map",
-        keyboardEventTarget: document,
-        controls: ol.control
-            .defaults()
-            .extend([
-                fullScreenControl,
-                mouseControl,
-                overViewMapControl,
-                scaleLineControl,
-                zoomSliderControl,
-                zoomToExtentControl,
-            ]),
-    });
-    // The array contains 3 default control elements
-    console.log(ol.control.defaults());
+  const map = new ol.Map({
+    view: new ol.View({
+      center: [0, 0],
+      zoom: 2,
+      // https://www.mathsisfun.com/geometry/radians.html
+      rotation: Math.PI / 6, // approx 90 degrees
+    }),
+    // Tile is base layer, we can add vector and raster on top
+    layers: [
+      new ol.layer.Tile({
+        source: new ol.source.OSM(),
+      }),
+    ],
+    target: 'js-map',
+    keyboardEventTarget: document,
+    controls: ol.control
+      .defaults()
+      .extend([
+        fullScreenControl,
+        mouseControl,
+        overViewMapControl,
+        scaleLineControl,
+        zoomSliderControl,
+        zoomToExtentControl,
+      ]),
+  });
+  // The array contains 3 default control elements
+  console.log(ol.control.defaults());
 
-    // Create an overlay
-    const popup = createOverlay(popupContainerEle);
-    // Adding overlay to map
-    map.addOverlay(popup);
-    map.on("click", (e) => {
-        const coord = e.coordinate;
-        popup.setPosition(undefined);
-        popup.setPosition(coord);
-        popupContainerEle.innerHTML = coord;
-    });
+  // Create an overlay
+  const popup = createOverlay(popupContainerEle);
+  // Adding overlay to map
+  map.addOverlay(popup);
+  map.on('click', (e) => {
+    const coord = e.coordinate;
+    popup.setPosition(undefined);
+    popup.setPosition(coord);
+    popupContainerEle.innerHTML = coord;
+  });
 
-    // Drag and Rotate
-    const dragRot = new ol.interaction.DragRotate({
-        condition: ol.events.condition.altKeyOnly,
-    });
-    map.addInteraction(dragRot);
+  // Drag and Rotate
+  const dragRot = new ol.interaction.DragRotate({
+    condition: ol.events.condition.altKeyOnly,
+  });
+  map.addInteraction(dragRot);
 
-    // Drawing
-    const draw = new ol.interaction.Draw({
-        type: "Polygon",
-        // freehand: true,
-    });
-    map.addInteraction(draw);
+  // Drawing
+  const draw = new ol.interaction.Draw({
+    type: 'Polygon',
+    // freehand: true,
+  });
+  map.addInteraction(draw);
 
-    draw.on("drawend", (e) => {
-        let parser = new ol.format.GeoJSON();
-        let drawnFeatures = parser.writeFeaturesObject([e.feature]);
-        console.log(drawnFeatures.features[0].geometry.coordinates);
-    });
+  draw.on('drawend', (e) => {
+    let parser = new ol.format.GeoJSON();
+    let drawnFeatures = parser.writeFeaturesObject([e.feature]);
+    console.log(drawnFeatures.features[0].geometry.coordinates);
+  });
 }
 
 /**
@@ -90,10 +90,10 @@ function init() {
  * @returns element from DOm
  */
 function queryDOM(id) {
-    if (!id || id.length === 0) {
-        throw new Error("id is not defined");
-    }
-    return document.querySelector(`#${id}`);
+  if (!id || id.length === 0) {
+    throw new Error('id is not defined');
+  }
+  return document.querySelector(`#${id}`);
 }
 
 /**
@@ -102,11 +102,11 @@ function queryDOM(id) {
  * @returns overlay object with mirrored positioning
  */
 function createOverlay(container) {
-    if (!container || container.length === 0) {
-        throw new Error("Container is not defined");
-    }
-    return new ol.Overlay({
-        element: container,
-        positioning: "bottom-left",
-    });
+  if (!container || container.length === 0) {
+    throw new Error('Container is not defined');
+  }
+  return new ol.Overlay({
+    element: container,
+    positioning: 'bottom-left',
+  });
 }
